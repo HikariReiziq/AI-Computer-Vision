@@ -29,7 +29,17 @@ def main(camera_index=0):
         print(f"[ERROR] Tidak bisa membuka kamera index {camera_index}. Coba cek koneksi / index kamera.")
         return
 
-    
+    # Gunakan Haar cascade yang ada di instalasi opencv-python
+    cascade_path = cv2.data.haarcascades + "haarcascade_frontalface_default.xml"
+    face_cascade = cv2.CascadeClassifier(cascade_path)
+    if face_cascade.empty():
+        print("[WARNING] Gagal load haarcascade. Deteksi wajah tidak akan bekerja.")
+
+    prev_time = time.time()
+    fps = 0.0
+    show_gray = False
+    show_canny = False
+    frame_counter = 0
 
     print("Tekan 'q' untuk keluar, 's' untuk simpan frame, 'g' toggle grayscale, 'c' toggle Canny edges.")
 
