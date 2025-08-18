@@ -7,6 +7,8 @@ from deepface import DeepFace
 ATTENDANCE_FILE = "attendance.csv"
 FACE_DIR = "faces"
 
+# Buat folder wajah jika belum ada
+os.makedirs(FACE_DIR, exist_ok=True)
 
 def mark_attendance(name, emotion):
     if not os.path.exists(ATTENDANCE_FILE):
