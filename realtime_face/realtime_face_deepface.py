@@ -7,6 +7,10 @@ from deepface import DeepFace
 ATTENDANCE_FILE = "attendance.csv"
 FACE_DIR = "faces"
 
+<<<<<<< HEAD
+=======
+# Buat folder wajah jika belum ada
+>>>>>>> 0d28b7cc1074ad40ab8e9b5df0921e8f4e69c8e0
 os.makedirs(FACE_DIR, exist_ok=True)
 
 def mark_attendance(name, emotion):
