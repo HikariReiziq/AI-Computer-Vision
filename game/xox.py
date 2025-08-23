@@ -37,3 +37,64 @@ def check_win(board, r, c, symbol):
         rr, cc = r-dr, c-dc
         while 0 <= rr < SIZE and 0 <= cc < SIZE and board[rr][cc] == symbol:
             count += 1
+            rr -= dr; cc -= dc
+        if count >= WIN_LEN:
+            return True
+    return False
+
+def board_full(board):
+    return all(cell != EMPTY for row in board for cell in row)
+
+def input_move(player):
+    while True:
+        s = input(f"{player} - masukkan baris,kolom (contoh 3,5) atau q untuk keluar: ").strip()
+        if s.lower() == "q":
+            return None
+        if "," in s:
+            parts = s.split(",")
+            if len(parts) == 2:
+                try:
+                    r = int(parts[0].strip())
+                    c = int(parts[1].strip())
+                    return (r, c)
+                except:
+                    pass
+        print("Input tidak valid. Ulangi.")
+
+def main():
+    board = create_board()
+    players = [("X","Player X"), ("O","Player O")]
+    turn = 0
+    clear()
+    print("XOX 16x16 — Menang: 5 beruntun. Giliran bergantian.")
+    while True:
+        clear()
+        print_board(board)
+        symbol, name = players[turn % 2]
+        mv = input_move(name)
+        if mv is None:
+            print("Keluar. Permainan dihentikan.")
+            break
+        r, c = mv
+        if not (0 <= r < SIZE and 0 <= c < SIZE):
+            print("Koordinat di luar papan. Tekan Enter untuk lanjut.")
+            input()
+            continue
+        if not valid_move(board, r, c):
+            print("Kotak sudah terisi. Tekan Enter untuk lanjut.")
+            input()
+            continue
+        board[r][c] = symbol
+        if check_win(board, r, c, symbol):
+            clear()
+            print_board(board)
+            print(f"*** {name} ({symbol}) MENANG! ***")
+            break
+        if board_full(board):
+            clear()
+            print_board(board)
+            print("*** Seri — papan penuh ***")
+            break
+        turn += 1
+
+
